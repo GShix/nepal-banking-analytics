@@ -66,7 +66,7 @@ class BankDataCleaner:
         print("Standardized text casing and stripped leading/trailing whitespaces.")
 
     def handle_domain_outliers(self):
-        # 1. Age must be realistic (18 to 100)
+        # 1. Age must be between 18 to 100
         if 'Age' in self.df.columns:
             invalid_age_mask = (self.df['Age'] < 18) | (self.df['Age'] > 100)
             self.df.loc[invalid_age_mask, 'Age'] = np.nan

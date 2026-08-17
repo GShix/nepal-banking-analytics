@@ -4,7 +4,7 @@ import pandas as pd
 
 def inject_dirty_data(input_filepath: str, output_filepath: str, seed: int = 42):
     """
-    Reads pristine banking dataset, introduces ~30% dirty records/anomalies,
+    Reads raw banking dataset, introduces ~30% dirty records/anomalies,
     and exports the dirty dataset to CSV.
     """
     np.random.seed(seed)
@@ -23,10 +23,8 @@ def inject_dirty_data(input_filepath: str, output_filepath: str, seed: int = 42)
     target_corrupt_count = int(n_rows * 0.30)
     corrupt_indices = np.random.choice(n_rows, size=target_corrupt_count, replace=False)
 
-    # ---------------------------------------------------------
     # Explicitly cast ALL target columns to 'object' dtype
     # to prevent pandas datetime64 / int64 type-safety errors
-    # ---------------------------------------------------------
     target_cols = [
         'Account_Balance', 'Monthly_Income', 'Age', 'Credit_Score', 
         'Loan_Amount', 'Account_Open_Date', 'Last_Transaction_Date'
@@ -35,9 +33,7 @@ def inject_dirty_data(input_filepath: str, output_filepath: str, seed: int = 42)
         if col in df_dirty.columns:
             df_dirty[col] = df_dirty[col].astype(str)
 
-    # ---------------------------------------------------------
     # 1. Currency Strings & Data Type Pollutants (~25% of corrupted set)
-    # ---------------------------------------------------------
     idx_curr = corrupt_indices[:int(target_corrupt_count * 0.25)]
     if 'Account_Balance' in df_dirty.columns:
         df_dirty.loc[idx_curr, 'Account_Balance'] = df_dirty.loc[idx_curr, 'Account_Balance'].apply(
@@ -48,9 +44,7 @@ def inject_dirty_data(input_filepath: str, output_filepath: str, seed: int = 42)
             lambda x: f"{x} NPR" if (pd.notnull(x) and x != 'nan') else x
         )
 
-    # ---------------------------------------------------------
     # 2. Missing & Disguised Nulls (~20% of corrupted set)
-    # ---------------------------------------------------------
     idx_null = corrupt_indices[int(target_corrupt_count * 0.25):int(target_corrupt_count * 0.45)]
     half = len(idx_null) // 2
     if 'Occupation' in df_dirty.columns:
@@ -58,9 +52,7 @@ def inject_dirty_data(input_filepath: str, output_filepath: str, seed: int = 42)
     if 'Education_Level' in df_dirty.columns:
         df_dirty.loc[idx_null[half:], 'Education_Level'] = np.nan
 
-    # ---------------------------------------------------------
     # 3. Impossible Outliers & Invalid Values (~15% of corrupted set)
-    # ---------------------------------------------------------
     idx_outliers = corrupt_indices[int(target_corrupt_count * 0.45):int(target_corrupt_count * 0.60)]
     third = len(idx_outliers) // 3
     if 'Age' in df_dirty.columns:
@@ -72,9 +64,7 @@ def inject_dirty_data(input_filepath: str, output_filepath: str, seed: int = 42)
             lambda x: str(float(x) * -1.5) if (pd.notnull(x) and x != 'nan') else x
         )
 
-    # ---------------------------------------------------------
     # 4. Whitespace & Text Inconsistencies (~20% of corrupted set)
-    # ---------------------------------------------------------
     idx_text = corrupt_indices[int(target_corrupt_count * 0.60):int(target_corrupt_count * 0.80)]
     if 'City' in df_dirty.columns:
         df_dirty.loc[idx_text, 'City'] = df_dirty.loc[idx_text, 'City'].apply(
@@ -85,16 +75,12 @@ def inject_dirty_data(input_filepath: str, output_filepath: str, seed: int = 42)
             lambda x: str(x).upper() if pd.notnull(x) else x
         )
 
-    # ---------------------------------------------------------
     # 5. Invalid Date Formats (~20% of corrupted set)
-    # ---------------------------------------------------------
     idx_dates = corrupt_indices[int(target_corrupt_count * 0.80):]
     if 'Account_Open_Date' in df_dirty.columns:
         df_dirty.loc[idx_dates, 'Account_Open_Date'] = "2025/31/12"  # Invalid month error
 
-    # ---------------------------------------------------------
     # 6. Duplicate Rows (~5% duplicates added)
-    # ---------------------------------------------------------
     num_duplicates = int(n_rows * 0.05)
     duplicates = df_dirty.sample(n=num_duplicates, random_state=seed)
     df_dirty = pd.concat([df_dirty, duplicates], ignore_index=True)
