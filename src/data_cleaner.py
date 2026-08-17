@@ -24,11 +24,10 @@ class BankDataCleaner:
     def clean_currency_and_numerics(self):
         numeric_cols = [
             'Account_Balance', 'Monthly_Income', 'Loan_Amount', 
-            'Interest_Rate', 'EMI_Amount', 'Monthly_Deposit', 
-            'Monthly_Withdrawal', 'Debit_Card_Usage', 'Credit_Card_Usage',
-            'Online_Banking_Usage', 'Mobile_Banking_Usage', 'Transaction_Count',
-            'Average_Transaction', 'ATM_Visits', 'FD_Amount', 
-            'Insurance_Premium', 'Investment_Amount', 'Age', 'Credit_Score'
+            'Interest_Rate', 'EMI_Amount', 'Monthly_Deposit', 'Credit_Card_Usage','Debit_Card_Usage'
+            'Monthly_Withdrawal', 'Transaction_Count', 'Average_Transaction',
+            'ATM_Visits', 'FD_Amount', 'Insurance_Premium', 'Investment_Amount',
+            'Age', 'Credit_Score'
         ]
 
         def clean_val(val):
@@ -45,6 +44,13 @@ class BankDataCleaner:
             if col in self.df.columns:
                 self.df[col] = self.df[col].apply(clean_val)
 
+        # Preserve Yes/No categorical columns; they are not numeric and should never be stripped to empty strings.
+        for col in ['Online_Banking_Usage', 'Mobile_Banking_Usage']:
+            if col in self.df.columns:
+                self.df[col] = self.df[col].apply(
+                    lambda x: str(x).strip().title() if pd.notnull(x) and str(x).strip().lower() not in ['nan', 'n/a', 'unknown', ''] else x
+                )
+
         print("Cleaned currency symbols and standardized numerical types.")
 
     def clean_text_and_categoricals(self):
@@ -52,7 +58,8 @@ class BankDataCleaner:
             'Customer_ID', 'Customer_Name', 'Gender', 'City', 'Province',
             'Occupation', 'Education_Level', 'Marital_Status', 'Account_Number',
             'Account_Type', 'Branch_Name', 'Loan_Status', 'Loan_Type',
-            'Customer_Segment', 'Risk_Category', 'Churn_Status', 'Relationship_Manager'
+            'Customer_Segment', 'Risk_Category', 'Churn_Status', 'Relationship_Manager',
+            'Online_Banking_Usage', 'Mobile_Banking_Usage'
         ]
 
         for col in text_cols:
