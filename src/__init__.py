@@ -1,0 +1,3 @@
+from .config import PROCESSED_DATA_PATH, RAW_DATA_PATH
+
+__all__ = ["RAW_DATA_PATH", "PROCESSED_DATA_PATH"]
