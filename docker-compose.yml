@@ -1,0 +1,20 @@
+services:
+  data-pipeline:
+    build:
+      context: .
+
+    container_name: nepal_banking_pipeline
+
+    volumes:
+      # Keep data persistent and accessible from the host
+      - ./data:/workspace/data
+
+      # Mount source code for development
+      - ./src:/workspace/src
+
+    environment:
+      PYTHONUNBUFFERED: "1"
+      PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONPATH: "/workspace/src"
+
+    restart: "no"

@@ -1,22 +1,17 @@
 import os
-from pathlib import Path
 
-# Base Directory
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = "/workspace"
 
-# Data Paths
-RAW_DATA_PATH = BASE_DIR / "data" / "raw" / "bank_dataset_dirty.csv"
-PROCESSED_DATA_PATH = (
-    BASE_DIR / "data" / "processed" / "banking_data_enriched.csv"
+DIRTY_DATA_PATH = os.path.join(
+    BASE_DIR,
+    "data",
+    "dirty",
+    "banking_data_dirty.csv"
 )
 
-# Business Constants & Risk Thresholds
-HIGH_RISK_DTI_THRESHOLD = 40.0
-HIGH_VALUE_ACCOUNT_MIN = 100000.0
-
-# Visual Styling Constants
-BRAND_COLORS = {
-    "primary": "#2b5c8f",
-    "secondary": "#d95f02",
-    "neutral": "#7570b3",
-}
+PROCESSED_DATA_PATH = os.path.join(
+    BASE_DIR,
+    "data",
+    "processed",
+    "banking_data_clean.csv"
+)

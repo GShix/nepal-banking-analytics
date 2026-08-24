@@ -3,7 +3,7 @@
 [![Power BI](https://img.shields.io/badge/Power_BI-Report-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)](https://powerbi.microsoft.com/)
 [![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 
-An enterprise-grade, end-to-end analytics application that cleans raw transactional banking data, models key executive metrics, segments customer risk profiles, and serves interactive insights via Streamlit and Power BI. Containerized with Docker for 100% reproducible deployment across any environment.
+An enterprise-grade, end-to-end analytics application that cleans raw transactional banking data, models key executive metrics, segments customer risk profiles, and serves interactive insights via Power BI. Containerized with Docker for 100% reproducible deployment across any environment.
 
 ---
 
