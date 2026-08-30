@@ -1,0 +1,49 @@
+--20 Intermediate-to-Advanced Questions (Business Metrics & Analytics)
+--1. Month-over-Month (MoM) Growth: 
+--Calculate the Month-over-Month percentage growth rate of total deposit amounts for the current calendar year.
+
+--2. High-Activity Risk Assessment: 
+--Identify customers who have executed more than 50 transactions but are still marked under the "High Risk" category. 
+--Display their customer_id and total transaction volume.
+--3. Customer Lifetime Value (CLV) Proxy: 
+--For each customer, calculate their total financial footprint: 
+--the sum of their account_balance, investment_amount, and minus any outstanding loan_amount.
+--3. Rolling 3-Month Average: 
+--Write a query to find the 3-month rolling average of monthly loan disbursements to identify seasonal funding trends.
+--4. Cohort Analysis: 
+--Group customers by the year they joined (date_joined) and calculate the churn rate for each yearly cohort to see if older cohorts are stickier.
+
+--5. First-Time Activation Time: 
+--Calculate the average number of days between a customer's date_joined and the date of their very first transaction.
+
+--6. Cross-Sell Index: 
+--Find the percentage of loan customers who also hold an active investment account with the bank, broken down by customer_segment.
+--7. Dormant Accounts: 
+--Identify "dormant" accounts that have had zero transaction activity in the last 180 days, but maintain a balance greater than $1,000.
+--8. Credit Score Tiering (Data Binning): 
+--Bucket customers into credit tiers (Poor: <600, Fair: 600-699, Good: 700-749, Excellent: 750+) and calculate the average loan default rate for each tier.
+--9. Top Spenders per Region: 
+--For each province, identify the top 3 customers who have the highest total withdrawal amounts using a window function.
+--10. Velocity Checking (Fraud Detection): 
+--Identify any accounts that have executed 3 or more transactions within a single 10-minute window.
+--11. Median Account Balance: 
+--Calculate the median account balance across the entire customer base without using a built-in MEDIAN() function (standard ANSI SQL approach).
+--12. Conditional Churn Metrics: 
+--Find the churn rate specifically for customers who have a credit score below 600 versus those who have a credit score above 750.
+
+--13. Product Density: 
+--Calculate the distribution of how many financial products (Accounts, Loans, Investments) customers hold. 
+--Show the percentage of customers holding 1, 2, or all 3 products.
+--14. Consecutive Drop in Balances: 
+--Write a query to flag accounts whose end-of-month balances have decreased for 3 consecutive months.
+--15. Marital Status & Asset Distribution: 
+--Analyze if married customers hold higher average investment volumes than unmarried customers, broken down by age decades (20s, 30s, 40s, etc.).
+--16. Most Traveled/Remote Users: 
+--Identify potential fraud or high-interstate travel by finding customers who completed transactions in 
+--two different cities within a 2-hour window.Loan-to-Income (LTI) Ratio: 
+--Calculate the Loan-to-Income ratio for all loan holders (Total Loan Amount divided by Annual Income). Return customers whose LTI exceeds 40%.
+--17. First vs Latest Transaction: 
+--For every active account, return the transaction type and amount of their first ever transaction and their most recent transaction side-by-side.
+--18. Slicer Simulation (Dynamic Aggregations): 
+--Write a single query using conditional flags (CASE WHEN) to dynamically aggregate total balances based on 
+--interactive filters: Age > 40, Credit Score > 700, and City = 'Toronto'.
