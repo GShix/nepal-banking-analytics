@@ -60,7 +60,7 @@ and "City" in ('Kathmandu', 'Lalitpur');
 
 --7. Investment Risk Snapshot: 
 --Find the maximum, minimum, and average investment amount for customers categorized under the "High Risk" segment.
---with investment_measures as(
+
 select  
 	max("Investment_Amount") as maximum_invest_amt, 
 	min("Investment_Amount") as minimum_invest_amt, 
